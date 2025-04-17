@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 class RoboTupiniquim
 {
@@ -27,13 +28,17 @@ class RoboTupiniquim
 
             char direcao = char.ToUpper(posicao[2][0]);
             if ("NSLO".IndexOf(direcao) == -1)
-            ()
+            {
                 Console.WriteLine("❌ Direção inválida. Use N, S, L ou O.");
                 continue;
             }
 
             Console.Write("Digite os comandos (ex: EMEMEMEMM): ");
             string comandos = Console.ReadLine().ToUpper();
+
+            Console.Clear();
+            MostrarMapa(largura, altura, x, y, direcao);
+            Thread.Sleep(800);
 
             foreach (char comando in comandos)
             {
@@ -48,9 +53,28 @@ class RoboTupiniquim
                         y = novoY;
                     }
                 }
+
+                Console.Clear();
+                MostrarMapa(largura, altura, x, y, direcao);
+                Thread.Sleep(400);
             }
 
-            Console.WriteLine($"{x} {y} {direcao}");
+            Console.WriteLine($"\n{x} {y} {direcao}");
+        }
+    }
+
+    static void MostrarMapa(int largura, int altura, int x, int y, char direcao)
+    {
+        for (int linha = altura; linha >= 0; linha--)
+        {
+            for (int coluna = 0; coluna <= largura; coluna++)
+            {
+                if (coluna == x && linha == y)
+                    Console.Write("R ");
+                else
+                    Console.Write(". ");
+            }
+            Console.WriteLine();
         }
     }
 
